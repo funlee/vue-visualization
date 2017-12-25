@@ -1,15 +1,15 @@
 <template>
-  <div class="trend">
+  <div class="sailor">
     <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'trend',
+  name: 'Sailor',
   data () {
     return {
-      msg: 'this is takepolice -- trend -- component'
+      msg: '惊叹号---水手怕水'
     }
   }
 }
@@ -18,6 +18,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
- color: pink;
+  color:red
 }
+
 </style>

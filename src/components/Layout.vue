@@ -3,36 +3,27 @@
     <div class="side-l-nav" :class="{active:navShow}">
       <div class="side-l-inner-wrap">
         <div class="side-nav-content">
-          <div class="side-nav-list" data-theme="takepolice">
-            <p class="side-nav-til" data-type="takepolice">接处警专题</p>
+          <div class="side-nav-list">
+            <p class="side-nav-til fantasy">范特西</p>
             <ul>
-              <li data-page="overview" class="active">
-                <router-link to="">接处警总览图</router-link>
-              </li>
-              <li data-page="distributed">
-                <router-link to="">警情与警力分布</router-link>
-              </li>
-              <li data-page="trend">
-                <router-link to="">警情趋势</router-link>
+              <li class="active">
+                <router-link to="/fantasy/castle">威廉古堡</router-link>
               </li>
             </ul>
           </div>
-          <div class="side-nav-list" data-theme="iot">
-            <p class="side-nav-til" data-type="iot">物联网专题</p>
+          <div class="side-nav-list">
+            <p class="side-nav-til stride">跨时代</p>
             <ul>
-              <li data-page="overview">
-                <router-link to="">物联网总览图</router-link>
-              </li>
-              <li data-page="tongbi">
-                <router-link to="">电动车警情月分析</router-link>
+              <li>
+                <router-link  to="/stride/fireworks">烟花易冷</router-link>
               </li>
             </ul>
           </div>
-          <div class="side-nav-list" data-theme="migrate">
-            <p class="side-nav-til" data-type="migrate">迁徙地图</p>
+          <div class="side-nav-list">
+            <p class="side-nav-til excleamation">惊叹号</p>
             <ul>
-              <li data-page="migratein">
-                <router-link to="">昆明人口迁徙</router-link>
+              <li>
+                <router-link to="/excleamation/sailor" replace>水手怕水</router-link>
               </li>
             </ul>
           </div>
@@ -107,7 +98,7 @@
 
   .side-nav-list {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
   }
 
   .side-nav-til {
@@ -122,15 +113,15 @@
     text-align: center;
   }
 
-  .side-nav-til[data-type="takepolice"] {
+  .fantasy{
     background-position: 0px -154px;
   }
 
-  .side-nav-til[data-type="migrate"] {
+  .stride{
     background-position: 0px -756px;
   }
 
-  .side-nav-til[data-type="iot"] {
+  .exclamation{
     background-position: 0px -1352px;
   }
 
