@@ -6,11 +6,18 @@ body {
     font-family: "微软雅黑";
 }
 
-
 .text-white-shadow {
     text-shadow: 0 0 5px #fbfbfb, 0 0 10px #fbfbfb, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 75px #228DFF;
 }
 
 .text-green-shadow {
     text-shadow: 0 0 5px #68fff3, 0 0 10px #68fff3, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 75px #228DFF;
+}
+
+.chart-title {
+    font-size: 52px;
+    color: #fff;
+    position: absolute;
+    top: 4px;
+    left: 50px;
 }

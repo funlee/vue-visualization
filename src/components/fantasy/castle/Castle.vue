@@ -2,12 +2,16 @@
   <div class="castle">
     <TopSide :title="title"></TopSide>
     <TopMid></TopMid>
+    <Left></Left>
+    <Right></Right>
   </div>
 </template>
 
 <script>
 import TopSide from '../../common/TopSide'
 import TopMid from '../../common/TopMid'
+import Left from './Left'
+import Right from './Right'
 
   export default {
     name: 'Castle',
@@ -18,7 +22,9 @@ import TopMid from '../../common/TopMid'
     },
     components:{
       TopSide,
-      TopMid
+      TopMid,
+      Left,
+      Right
     },
     mounted() {
       // axios.get(api.castleTop)

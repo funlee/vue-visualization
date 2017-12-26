@@ -10,5 +10,7 @@ const onlineApiHost = isOnline ? 'http://88.888.88.88:8888/project/' :'http://fu
 const onlineWsHost = isOnline ? 'ws:/88.888.88.888:8888/' : 'http://funlee.com/'
 
 export default {
-  castleTop: onlineApiHost + 'fantasy/castle/top'
+  castleTop: onlineApiHost + 'fantasy/castle/top',
+  iotalarm: onlineApiHost + 'iot/overview/alarm',
+  iottop5: onlineApiHost + 'iot/overview/top5'
 }
