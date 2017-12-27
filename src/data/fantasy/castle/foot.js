@@ -15,14 +15,14 @@ const data = () => {
     'msg': 'success',
     'result': {
       'proportion|12': [{
-        'name|+1': ['东川区', '嵩明县', '五华区', '富民县', '盘龙区', '官渡区', '西山区', '宜良县', '安宁市', '呈贡区', '晋宁县', '石林彝族县'],
-        'value': '@natural(1,200)',
-        'proportion': '@integer(-100,100)'
+        'name': '@cname()',
+        'value': '@natural(100,1000)',
+        'proportion': '@integer(-80,80)'
       }],
       'tongbi|12': [{
         'name|+1': ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        'tbRatio': '@integer(-100,100)',
-        'hbRatio': '@integer(-100,100)',
+        'tbRatio': '@integer(-80,80)',
+        'hbRatio': '@integer(-80,80)',
         'tbValue': '@natural(100,1000)',
         'hbValue': '@natural(100,1000)',
         'value': '@natural(100,1000)'

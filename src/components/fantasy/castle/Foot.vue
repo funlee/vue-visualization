@@ -1,7 +1,7 @@
 <template>
   <div class="foot">
     <div class="proportion">
-      <h2 class="chart-title">电动车警情和占比</h2>
+      <h2 class="chart-title">底部模块一</h2>
       <ul class="chart-legend">
         <li data-op="value">件</li>
         <li data-op="proportion">占比</li>
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="tongbi">
-      <h2 class="chart-title">电动车警情同比</h2>
+      <h2 class="chart-title">底部模块二</h2>
       <ul class="chart-legend">
         <li data-op="tb">同比</li>
         <li data-op="value">当前</li>
@@ -70,6 +70,7 @@
   import api from '../../../assets/scripts/tool/api'
   import Data from '../../../data/fantasy/castle/foot'
   import MixBarArea from '../../../assets/scripts/charts/mixBarArea'
+  import DoubleBar from '../../../assets/scripts/charts/doubleBar'
   Data()
   export default {
     name: 'foot',
@@ -91,18 +92,28 @@
     },
     methods: {
       dealProportion (data) {
-        console.log(11, data)
         const config = {}
         const mixBarArea = new MixBarArea('.proportion-chart', config)
         mixBarArea.drawChart(data)
       },
       dealTb (data) {
-        console.log(22, data)
+        const config = {
+          width: 1320,
+          height: 330,
+          padding: {
+            top: 30,
+            right: 30,
+            bottom: 50,
+            left: 30
+          }
+        }
+        const doubleBar = new DoubleBar('#tongbiChart', config)
+        doubleBar.drawChart(data)
       }
     }
   }
 </script>
-<style>
+<style scoped>
   .proportion {
     position: absolute;
     top: 1480px;
@@ -114,7 +125,7 @@
 
   .proportion .chart-title,
   .tongbi .chart-title {
-    top: -8px;
+    top: 2px;
   }
 
   .tongbi {

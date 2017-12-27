@@ -1,7 +1,7 @@
 <template>
   <div class="left">
     <div class="diandongche">
-      <h2 class="chart-title">开不了口
+      <h2 class="chart-title">左模块一
       </h2>
       <ul class="alarm-list">
         <li>
@@ -25,7 +25,7 @@
       </ul>
     </div>
     <div class="caseResolved">
-      <h2 class="chart-title">双节棍</h2>
+      <h2 class="chart-title">左模块二</h2>
       <div class="case-resolved-chart" id="caseResolvedChart"></div>
     </div>
   </div>
@@ -85,7 +85,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .diandongche {
     position: absolute;
     top: 220px;

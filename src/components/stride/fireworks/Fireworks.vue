@@ -1,24 +1,22 @@
 <template>
   <div class="fireworks">
-    <h1>{{ msg }}</h1>
+    <TopSide :title="title"></TopSide>
   </div>
 </template>
 
 <script>
+import TopSide from '../../common/TopSide'
 export default {
-  name: 'Fireworks',
   data () {
     return {
-      msg: '跨时代---烟花易冷'
+      title: '测试页面'
     }
+  },
+  components: {
+    TopSide
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  color:red
-}
 
 </style>

@@ -48,9 +48,9 @@ export default class MixBarArea {
   }
   drawChart (data) {
     const { width, height, padding: { bottom, top } } = this.config
-    let xData = []
+    this.xData = []
     data.map(item => {
-      xData.push(item.name)
+      this.xData.push(item.name)
     })
     this.xScale = d3.scaleBand() // .attr("width", this.xScale.bandwidth())
       .domain(d3.range(data.length))
@@ -82,10 +82,10 @@ export default class MixBarArea {
     this.drawBar(data)
     // 绘制柱图的Y轴
     this.drawYaxisValue()
-    // // 绘制同环比的Y轴
-    // this.drawYaxisCom()
-    // // 绘制公用的X轴
-    // this.drawXaxis()
+    // 绘制同环比的Y轴
+    this.drawYaxisCom()
+    // 绘制公用的X轴
+    this.drawXaxis()
   }
   drawArea (data) {
     const { height, padding: { bottom }, fillArea } = this.config
@@ -185,5 +185,61 @@ export default class MixBarArea {
     }
     yValueAxisG.attr('transform', `translate(80,${top})`)
       .call(yValueAxis)
+  }
+  drawYaxisCom () {
+    const { width, height, padding: { bottom, top } } = this.config
+    this.yComScale.range([height - bottom - top, 0])
+    const yComAxis = d3.axisRight(this.yComScale)
+      .ticks(5)
+      .tickFormat(function (d) {
+        return d + '%'
+      })
+    const isYComAxis = this.svg.select('.y-com-axis').empty()
+    let yComAxisG
+    if (isYComAxis) {
+      yComAxisG = this.svg.append('g').attr('class', 'y-com-axis axis')
+    } else {
+      yComAxisG = this.svg.select('.y-com-axis')
+    }
+    yComAxisG.attr('transform', `translate(${width - 90},${top})`)
+      .call(yComAxis)
+  }
+  drawXaxis () {
+    const { width, height, padding: { left, right, bottom } } = this.config
+    const isXAxis = this.svg.select('.x-axis').empty()
+    let xAxisG
+    if (isXAxis) {
+      xAxisG = this.svg.append('g').attr('class', 'x-axis axis')
+    } else {
+      xAxisG = this.svg.select('.x-axis')
+    }
+    const xTextUpdate = xAxisG.selectAll('text').data(this.xData)
+    xTextUpdate.enter().append('text')
+    xTextUpdate.exit().remove()
+    xAxisG.selectAll('text').data(this.xData)
+      .attr('x', (d, i) => {
+        return this.xScale(i)
+      })
+      .attr('y', height - 10)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', 28)
+      .text(d => {
+        return d
+      })
+    // 在添加一根水平线
+    const isXAxisLine = this.svg.select('.x-axis-line').empty()
+    let xAxisLine
+    if (isXAxisLine) {
+      xAxisLine = this.svg.append('line').attr('class', 'x-axis-line')
+    } else {
+      xAxisLine = this.svg.select('.x-axis-line')
+    }
+    xAxisLine
+      .attr('x1', left + 60)
+      .attr('x2', width - left - right)
+      .attr('y1', height - bottom)
+      .attr('y2', height - bottom)
+      .attr('fill', 'none')
+      .attr('stroke', '#637dff')
   }
 }

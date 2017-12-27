@@ -1,7 +1,7 @@
 <template>
   <div class="right">
     <div class="people-sex">
-      <h2 class="chart-title">上海一九四三</h2>
+      <h2 class="chart-title">右模块一</h2>
       <div class="sex-chart" id="sexChart">
         <svg>
           <defs>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="jizhan">
-      <h2 class="chart-title">安静TOP5</h2>
+      <h2 class="chart-title">右模块TOP5</h2>
       <ul class="jizhan-list">
         <li class="jizhan-item" v-for="(list,index) in jizhan" :key="list.id">
           <div class="jizhan-item-index" :style="{color:list.color}">{{index + 1}}</div>
@@ -97,7 +97,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .people-sex {
     position: absolute;
     top: 220px;

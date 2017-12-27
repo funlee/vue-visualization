@@ -17,7 +17,7 @@ export default {
   name: 'Castle',
   data () {
     return {
-      title: '威廉古堡'
+      title: '测试页面'
     }
   },
   components: {
@@ -26,9 +26,6 @@ export default {
     Left,
     Right,
     Foot
-  },
-  mounted () {
-    console.log(123)
   }
 }
 </script>
