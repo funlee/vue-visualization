@@ -42,20 +42,18 @@
 <script>
   export default {
     name: 'layout',
-    data() {
+    data () {
       return {
         navShow: true
       }
     },
     methods: {
-      navBtn() {
-        this.navShow = this.navShow ? false : true
+      navBtn () {
+        this.navShow = !this.navShow
       }
     }
   }
-
 </script>
-
 <style scoped>
   .layout {
     width: 100%;

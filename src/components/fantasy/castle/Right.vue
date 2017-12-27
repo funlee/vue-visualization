@@ -1,18 +1,37 @@
 <template>
   <div class="right">
-    <div class="diandongchetop5">
-      <h2 class="chart-title">电动车数TOP5</h2>
-      <div class="diandongchetop5-svg-wrap">
-        <svg class="diandongchetop5-svg">
-
+    <div class="people-sex">
+      <h2 class="chart-title">上海一九四三</h2>
+      <div class="sex-chart" id="sexChart">
+        <svg>
+          <defs>
+            <linearGradient id="outline" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color: rgb(6, 124, 255); stop-opacity: 1;"></stop>
+              <stop offset="100%" style="stop-color: rgb(160, 60, 218);stop-opacity: 1;"></stop>
+            </linearGradient>
+            <linearGradient id="innerBall" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color: rgb(6, 124, 255); stop-opacity: 1;"></stop>
+              <stop offset="100%" style="stop-color: rgb(160, 60, 218);stop-opacity: 1;"></stop>
+            </linearGradient>
+          </defs>
         </svg>
       </div>
+      <div class="sex-legend">
+        <p class="male">男性
+          <span>{{male}}</span>
+          <em>%</em>
+        </p>
+        <p class="female">女性
+          <span>{{100 - male}}</span>
+          <em>%</em>
+        </p>
+      </div>
     </div>
-    <div class="jizhantop5">
-      <h2 class="chart-title">基站数TOP5</h2>
-      <ul class="jizhantop5-list">
-        <li class="jizhan-item" v-for="list in jizhan" :key="list.id">
-          <div class="jizhan-item-index" :style="{color:list.color}">1</div>
+    <div class="jizhan">
+      <h2 class="chart-title">安静TOP5</h2>
+      <ul class="jizhan-list">
+        <li class="jizhan-item" v-for="(list,index) in jizhan" :key="list.id">
+          <div class="jizhan-item-index" :style="{color:list.color}">{{index + 1}}</div>
           <div class="jizhan-item-container">
             <div class="jizhan-bar-container">
               <div class="jizhan-back-bar">
@@ -20,7 +39,6 @@
               </div>
               <div class="jizhan-value">{{list.value}}</div>
             </div>
-
             <div class="jizhan-item-name">{{list.name}}</div>
           </div>
         </li>
@@ -29,26 +47,26 @@
   </div>
 </template>
 <script>
-  import api from '../../../tool/api'
- import Data from '../../../data/fantasy/castle/bandTop'
-  Data()
-  import axios from 'axios'
   import * as d3 from 'd3'
+  import axios from 'axios'
+  import WaterBall from '../../../assets/scripts/charts/waterBall'
+  import api from '../../../assets/scripts/tool/api'
+  import Data from '../../../data/fantasy/castle/bandTop'
+  Data()
   export default {
     name: 'right',
-    data() {
+    data () {
       return {
+        male: 0,
         jizhan: []
       }
     },
-    mounted() {
+    mounted () {
       const self = this
-      console.log(api.iottop5)
       axios.get(api.iottop5)
         .then(response => {
           const data = response.data.result
-          console.log(data)
-          self.dealDDC(data.ddc)
+          self.dealDDC(data.sex)
           self.dealJizhan(data.jizhan)
         })
         .catch(error => {
@@ -56,17 +74,20 @@
         })
     },
     methods: {
-      dealDDC(data) {
-
+      dealDDC (data) {
+        this.male = data.male
+        const config = {}
+        const waterBall = new WaterBall('#sexChart', config)
+        waterBall.drawCharts(data)
       },
-      dealJizhan(data) {
+      dealJizhan (data) {
         const color = ['#ffd43d', '#efefef', '#eb8711', '#14c7fb', '#14c7fb']
         const max = d3.max(data, d => {
           return d.value
         })
         data.map((item, i) => {
           this.jizhan.push({
-            barWidth: item.value * 360 / max,
+            barWidth: `${item.value * 100 / max}%`,
             value: parseInt(item.value, 10),
             color: color[i],
             name: item.name
@@ -75,11 +96,9 @@
       }
     }
   }
-
 </script>
 <style>
-  .diandongchetop5 {
-    z-index: 1;
+  .people-sex {
     position: absolute;
     top: 220px;
     right: 70px;
@@ -88,75 +107,44 @@
     background: url(../../../assets/images/common/tip-title-bg.png) no-repeat top left;
   }
 
-  .diandongchetop5-svg-wrap {
-    width: 100%;
-    height: 100%;
+  .sex-chart {
+    margin-top:70px;
   }
 
-  .diandongchetop5-svg {
-    height: 100%;
-    z-index: 50;
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .diandongche-tooltip {
+  .sex-legend {
     position: absolute;
-    padding: 10px 15px;
-    background: rgba(59, 57, 54, 0.8);
-    border-radius: 5px;
-    border: 1px solid #928a82;
+    top: 50%;
+    right: 4%;
+    transform: translateY(-50%);
+  }
+
+  .sex-legend p {
+    font-size: 38px;
     color: #fff;
-    font-size: 30px;
-    z-index: 10;
+    padding-left: 40px;
+    line-height: 1.5;
   }
 
-  .text-legend {
-    position: absolute;
-    left: 20px;
-    color: #AD006B;
-    font-size: 1.2em;
-    text-align: center;
-    text-transform: uppercase;
-    font-family: "Avenir Bold", Arial bold, Helvetica bold;
+  .sex-legend p span {
+    color: #44ff86;
+    font-size: 40px;
+    margin: 0 12px 0 8px;
   }
 
-  .groupsales rect:first-of-type {
-    transform-origin: 50% 50%;
-    -webkit-transform-origin: 50% 50%;
-    /*transform: skewY(30deg) translateY(-20px);*/
-    transform: skewY(10deg) translateY(-20px);
-    -webkit-transform: skewY(10deg) translateY(-20px);
+  .sex-legend p em {
+    color: #44ff86;
+    font-size: 28px;
   }
 
-  .groupsales rect:nth-child(2) {
-    transform-origin: 50% 50%;
-    -webkit-transform-origin: 50% 50%;
-    transform: skewY(-60deg) translateY(-33px);
-    -webkit-transform: skewY(-60deg) translateY(-33px);
+  .sex-legend .male {
+    background: url(../../../assets/images/fantasy/castle/male-legend.png) no-repeat left center;
   }
 
-  .background_blur_info {
-    /* background: url("http://twin-dev.net/experiments/codevember/d3js-barcharts/img/station-background.jpg") no-repeat fixed 0 0; */
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    height: auto;
-    width: auto;
-    z-index: -100;
-    -webkit-filter: blur(20px);
-    filter: blur(20px);
+  .sex-legend .female {
+    background: url(../../../assets/images/fantasy/castle/female-legend.png) no-repeat left center;
   }
-  /*基站TOP5*/
 
-  .jizhantop5 {
+  .jizhan {
     position: absolute;
     top: 743px;
     right: 70px;
@@ -165,18 +153,18 @@
     background: url(../../../assets/images/common/tip-title-bg.png) no-repeat top left;
   }
 
-  .jizhantop5 .jizhantop5-list {
+  .jizhan-list {
     margin-top: 136px;
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-item {
+  .jizhan-item {
     width: 100%;
     height: 100px;
     margin-top: 10px;
     background: url(../../../assets/images/fantasy/castle/top-item-bg.png) 0% 0% / 100% 100% no-repeat;
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-item-index {
+  .jizhan-item-index {
     float: left;
     height: 100%;
     line-height: 100px;
@@ -186,20 +174,20 @@
     font-size: 36px;
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-item-container {
+  .jizhan-item-container {
     float: left;
     box-sizing: border-box;
     height: 100%;
     padding: 20px 0px 20px 10px;
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-bar-container {
+  .jizhan-bar-container {
     width: 445px;
     height: 25px;
     line-height: 25px;
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-back-bar {
+  .jizhan-back-bar {
     position: relative;
     float: left;
     width: 360px;
@@ -208,7 +196,7 @@
     background: url(../../../assets/images/fantasy/castle/top-progress-bg.png) 0% 0% / 100% 100% no-repeat;
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-outer-bar {
+  .jizhan-outer-bar {
     position: absolute;
     top: 0;
     left: 0;
@@ -216,13 +204,13 @@
     background: linear-gradient(to right, #1963a7 0%, #bec374 100%)
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-value {
+  .jizhan-value {
     float: left;
     color: #3da3ff;
     font-size: 30px;
   }
 
-  .jizhantop5 .jizhantop5-list .jizhan-item-name {
+  .jizhan-item-name {
     font-size: 30px;
     color: #b0caf9;
   }

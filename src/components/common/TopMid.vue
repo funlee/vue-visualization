@@ -1,6 +1,6 @@
 <template>
   <div class="top-mid">
-    <div class="item" v-for="item in dataset" :key="item.id" >
+    <div class="item" v-for="item in dataset" :key="item.id">
       <span class="name">{{item.name}}
         <strong>{{item.value}}</strong>
       </span>
@@ -13,55 +13,52 @@
   </div>
 </template>
 <script>
-import api from '../../tool/api'
-import Data from '../../data/fantasy/castle/top'
-Data()
-import axios from 'axios'
+  import axios from 'axios'
+  import api from '../../../src/assets/scripts/tool/api'
+  import Data from '../../data/fantasy/castle/top'
+  Data()
   export default {
     name: 'topMid',
-    data() {
+    data () {
       return {
         dataset: []
       }
     },
-    mounted() {
+    mounted () {
       const self = this
       axios.get(api.castleTop)
-      .then(response=>{
-        const data = response.data.result.top
-        data.map(item=>{
-          let state
-          let huanbi
-          if(item.huanbi > 0) {
-            state = 'up'
-            huanbi = item.huanbi
-          } else if(item.huanbi == 0) {
-            state = 'level'
-            huanbi = item.huanbi
-          } else if(item.huanbi < 0) {
-            state = 'down'
-            huanbi = Math.abs(item.huanbi)
-          }
-          self.dataset.push({
-            name:item.name,
-            value:item.value,
-            huanbi:huanbi,
-            state:state
+        .then(response => {
+          const data = response.data.result.top
+          data.map(item => {
+            let state
+            let huanbi
+            if (item.huanbi > 0) {
+              state = 'up'
+              huanbi = item.huanbi
+            } else if (item.huanbi === 0) {
+              state = 'level'
+              huanbi = item.huanbi
+            } else if (item.huanbi < 0) {
+              state = 'down'
+              huanbi = Math.abs(item.huanbi)
+            }
+            self.dataset.push({
+              name: item.name,
+              value: item.value,
+              huanbi: huanbi,
+              state: state
+            })
           })
         })
-      })
-      .catch(error=>{
-        console.error(error)
-      })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }
-
 </script>
-
 <style>
   .top-mid {
     position: absolute;
-    z-index: 1;
     left: 50%;
     top: 30px;
     width: 1650px;

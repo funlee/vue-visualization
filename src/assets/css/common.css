@@ -21,3 +21,29 @@ body {
     top: 4px;
     left: 50px;
 }
+
+.auto-tooltip {
+    box-sizing: border-box;
+    position: absolute;
+    padding: 10px 15px;
+    background: rgba(59, 57, 54, 0.8);
+    border-radius: 5px;
+    border: 1px solid #928a82;
+    color: #fff;
+    font-size: 30px;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: none;
+    shape-rendering: optimizeSpeed;
+}
+
+.axis text {
+    font-size: 28px;
+    font-family: sans-serif;
+    fill: #a4d5ff;
+}

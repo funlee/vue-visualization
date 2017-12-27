@@ -26,21 +26,19 @@
     </div>
     <div class="caseResolved">
       <h2 class="chart-title">双节棍</h2>
-      <div class="case-resolved-chart" id="caseResolvedChart">
-
-      </div>
+      <div class="case-resolved-chart" id="caseResolvedChart"></div>
     </div>
   </div>
 </template>
 <script>
-  import api from '../../../tool/api'
-  import Data from '../../../data/fantasy/castle/left'
-  import MultiPie from '../../../assets/js/multiPie'
-  Data()
   import axios from 'axios'
+  import api from '../../../assets/scripts/tool/api'
+  import Data from '../../../data/fantasy/castle/left'
+  import MultiPie from '../../../assets/scripts/charts/multiPie'
+  Data()
   export default {
     name: 'left',
-    data() {
+    data () {
       return {
         thisyear: '',
         hbstate: '',
@@ -48,7 +46,7 @@
         lastyear: ''
       }
     },
-    mounted() {
+    mounted () {
       const self = this
       axios.get(api.iotalarm)
         .then(response => {
@@ -61,32 +59,31 @@
         })
     },
     methods: {
-      dealDDC(data) {
+      dealDDC (data) {
         let hbstate
         let hbValue = data.huanbi
         if (hbValue < 0) {
           hbstate = 'down'
           hbValue = Math.abs(hbValue)
-        } else if (hbValue == 0) {
+        } else if (hbValue === 0) {
           hbstate = 'level'
           hbValue = '- 0'
         } else if (hbValue > 0) {
           hbstate = 'up'
           hbValue = Math.abs(hbValue)
         }
-        this.thisyear = data.thisyear,
-          this.hbstate = hbstate,
-          this.huanbi = hbValue,
-          this.lastyear = data.lastyear
+        this.thisyear = data.thisyear
+        this.hbstate = hbstate
+        this.huanbi = hbValue
+        this.lastyear = data.lastyear
       },
-      dealCase(data) {
+      dealCase (data) {
         const config = {}
-        const multiPie = new MultiPie('.case-resolved-chart',config)
+        const multiPie = new MultiPie('.case-resolved-chart', config)
         multiPie.render(data)
       }
     }
   }
-
 </script>
 <style>
   .diandongche {
@@ -211,5 +208,4 @@
     height: 270px;
     margin-top: 130px;
   }
-
 </style>

@@ -3,16 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
 import './assets/css/reset.css'
 import './assets/css/common.css'
-
-import zoom from './tool/zoom'
+import zoom from './assets/scripts/tool/zoom'
 zoom()
 window.addEventListener('resize', zoom)
-
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -11,13 +11,13 @@
   export default {
     props: ['title'],
     name: 'topSide',
-    data() {
+    data () {
       return {
         yyyyMMdd: '',
         HHmm: ''
       }
     },
-    mounted() {
+    mounted () {
       const date = Mock.Random.now('yyyyMMddHHmm')
       const year = date.substring(0, 4)
       const month = date.substring(4, 6)
@@ -28,12 +28,10 @@
       this.HHmm = `${hour}:${minute}`
     }
   }
-
 </script>
 <style>
   .top-side {
     position: absolute;
-    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
