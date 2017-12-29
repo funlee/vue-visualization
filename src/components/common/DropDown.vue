@@ -2,16 +2,7 @@
   <div class="drop-down">
     <div class="target-value" :class="{fold: isFold}" @click="showFold">昆明市</div>
     <ul class="down-list">
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
-      <li>测试数据</li>
+      <li v-for="item in listData" :key="item.id" data-key="item.key" @click="getValue(item.key, item.value)">{{item.value}}</li>
     </ul>
   </div>
 </template>
@@ -21,7 +12,25 @@
     data () {
       return {
         dataset: [],
-        isFold: true
+        isFold: true,
+        listData:[
+          {
+            key: '1',
+            value: '测试数据'
+          },
+          {
+            key: '1',
+            value: '测试数据'
+          },
+          {
+            key: '1',
+            value: '测试数据'
+          },
+          {
+            key: '1',
+            value: '测试数据'
+          },
+        ]
       }
     },
     mounted () {
@@ -30,6 +39,9 @@
     methods: {
       showFold () {
         this.isFold = !this.isFold
+      },
+      getValue(key, value) {
+        console.log(key, value)
       }
     }
   }
