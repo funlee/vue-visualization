@@ -12,5 +12,6 @@ export default {
   castleTop: onlineApiHost + 'fantasy/castle/top',
   iotalarm: onlineApiHost + 'iot/overview/alarm',
   iottop5: onlineApiHost + 'iot/overview/top5',
-  iottrend: onlineApiHost + 'iot/overview/trend'
+  iottrend: onlineApiHost + 'iot/overview/trend',
+  district: onlineApiHost + 'stride/fireworks/city'
 }

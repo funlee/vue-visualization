@@ -9,28 +9,16 @@
 <script>
   export default {
     name: 'dropDown',
+    props: {
+      listData: {
+        type: Array,
+        default: []
+      }
+    },
     data () {
       return {
         dataset: [],
-        isFold: true,
-        listData:[
-          {
-            key: '1',
-            value: '测试数据'
-          },
-          {
-            key: '1',
-            value: '测试数据'
-          },
-          {
-            key: '1',
-            value: '测试数据'
-          },
-          {
-            key: '1',
-            value: '测试数据'
-          },
-        ]
+        isFold: true
       }
     },
     mounted () {
@@ -40,7 +28,7 @@
       showFold () {
         this.isFold = !this.isFold
       },
-      getValue(key, value) {
+      getValue (key, value) {
         console.log(key, value)
       }
     }
