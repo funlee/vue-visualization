@@ -4,6 +4,7 @@
     <TopMid></TopMid>
     <Left></Left>
     <Right></Right>
+    <MapHeat></MapHeat>
     <Foot></Foot>
   </div>
 </template>
@@ -13,6 +14,7 @@ import TopMid from '../../common/TopMid'
 import Left from './Left'
 import Right from './Right'
 import Foot from './Foot'
+import MapHeat from './MapHeat'
 export default {
   name: 'Castle',
   data () {
@@ -25,7 +27,8 @@ export default {
     TopMid,
     Left,
     Right,
-    Foot
+    Foot,
+    MapHeat
   }
 }
 </script>

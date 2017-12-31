@@ -6,6 +6,7 @@
  * @Description: 柱状图和面积图混合
  */
 import * as d3 from 'd3'
+import $ from 'jquery'
 import config from '../tool/config'
 import { tooltip } from '../tool/utils'
 export default class MixBarArea {
@@ -35,6 +36,11 @@ export default class MixBarArea {
     this.svg = d3.select(selector).select('svg')
       .attr('width', width)
       .attr('height', height)
+    $('.proportion').find('.chart-legend').find('li').off().on('click', function () {
+      $(this).toggleClass('legend-hide')
+      var opType = $(this).attr('data-op')
+      $(selector).find('.' + opType + '-chart').fadeToggle()
+    })
   }
   addGWrap (className) {
     const isWrap = this.svg.select('.' + className).empty()
@@ -97,12 +103,12 @@ export default class MixBarArea {
     areaPath.y1((d, i) => {
       return height - this.yComScale(d.proportion) - bottom
     })
-    const isArea = this.svg.select('.area-path').empty()
+    const isArea = this.svg.select('.proportion-chart').empty()
     let area
     if (isArea) {
-      area = this.svg.append('path').attr('class', 'area-path')
+      area = this.svg.append('path').attr('class', 'proportion-chart')
     } else {
-      area = this.svg.select('.area-path')
+      area = this.svg.select('.proportion-chart')
     }
     area
       .attr('d', areaPath(data))
@@ -125,6 +131,7 @@ export default class MixBarArea {
     // 绘制value的柱子
     itemEnter.append('rect')
     group.select('rect')
+      .attr('class', 'value-chart')
       .attr('x', (d, i) => {
         return this.xScale(i)
       })

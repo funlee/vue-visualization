@@ -13,5 +13,7 @@ export default {
   iotalarm: onlineApiHost + 'iot/overview/alarm',
   iottop5: onlineApiHost + 'iot/overview/top5',
   iottrend: onlineApiHost + 'iot/overview/trend',
-  district: onlineApiHost + 'stride/fireworks/city'
+  district: onlineApiHost + 'stride/fireworks/city',
+  list: onlineApiHost + 'stride/fireworks/list',
+  dotemap: onlineApiHost + 'fantasy/castle/dotemap'
 }

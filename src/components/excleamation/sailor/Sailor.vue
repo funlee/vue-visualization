@@ -1,16 +1,20 @@
 <template>
   <div class="sailor">
-    <h1>{{ msg }}</h1>
+    <TopSide :title="title"></TopSide>
   </div>
 </template>
 
 <script>
+import TopSide from '../../common/TopSide'
 export default {
   name: 'Sailor',
   data () {
     return {
-      msg: '惊叹号---水手怕水'
+      title: '开发中...'
     }
+  },
+  components: {
+    TopSide
   }
 }
 </script>

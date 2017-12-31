@@ -48,3 +48,73 @@ body {
     font-family: sans-serif;
     fill: #a4d5ff;
 }
+
+.legend-hide {
+    color: #8da5e4 !important;
+}
+
+.map-chart .xingzheng {
+    transform: translate(0px, 8px);
+}
+
+.map-chart .xingshi .circleMain {
+    fill: #0084ff;
+}
+
+.map-chart .xingzheng .circleMain {
+    fill: #fff;
+}
+
+.map-chart .xingshi .circleOuter1,
+.xingshi .circleOuter2 {
+    stroke: #0084ff;
+    fill: none;
+}
+
+.map-chart .xingzheng .circleOuter1,
+.xingzheng .circleOuter2 {
+    stroke: #fff;
+    fill: none;
+}
+
+.circleOuter2 {
+    animation: cri 1s infinite;
+}
+
+@keyframes cri {
+    0%,
+    100%,
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
+        transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+    }
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes cri {
+    0%,
+    100%,
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
+        transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+    }
+    0% {
+        -webkit-transform: scale(1);
+    }
+    100% {
+        -webkit-transform: scale(1.5);
+        -webkit-opacity: 0;
+    }
+}

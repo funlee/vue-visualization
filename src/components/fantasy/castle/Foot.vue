@@ -25,7 +25,7 @@
         </svg>
       </div>
     </div>
-    <div class="tongbi">
+    <div class="tongbi chart-wrap">
       <h2 class="chart-title">底部模块二</h2>
       <ul class="chart-legend">
         <li data-op="tb">同比</li>

@@ -6,6 +6,7 @@
  * @Description: 多列柱状图
  */
 import * as d3 from 'd3'
+import $ from 'jquery'
 import config from '../tool/config'
 import { tooltip } from '../tool/utils'
 export default class DoubleBar {
@@ -43,6 +44,11 @@ export default class DoubleBar {
     this.svg = d3.select(selector).select('svg')
       .attr('width', width)
       .attr('height', height)
+    $('.chart-wrap').find('.chart-legend').find('li').off().on('click', function () {
+      $(this).toggleClass('legend-hide')
+      var opType = $(this).attr('data-op')
+      $(selector).find('.' + opType + '-bar').fadeToggle()
+    })
   }
   drawChart (data) {
     const { width, height, mask, padding: { bottom, top, left, right } } = this.config
@@ -355,5 +361,25 @@ export default class DoubleBar {
       d3.select(this).select('.hb-bar').attr('fill', huanbi)
       d3.select('.auto-tooltip').style('display', 'none')
     })
+  }
+  addMask () {
+    const { width, height } = this.config
+    const maskLine = d3.select('.mask-line')
+    const linePart = 2
+    const lineWidth = 2
+    const update = maskLine.selectAll('line').data(d3.range(Math.ceil(width / linePart)))
+    update.enter().append('line')
+    update.exit().remove()
+    maskLine.selectAll('line')
+      .attr('x1', (d, i) => {
+        return i * (linePart + lineWidth)
+      })
+      .attr('x2', (d, i) => {
+        return i * (linePart + lineWidth)
+      })
+      .attr('y1', 0)
+      .attr('y2', height)
+      .style('stroke-width', lineWidth)
+      .style('stroke', 'black')
   }
 }
