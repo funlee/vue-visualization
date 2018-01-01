@@ -4,7 +4,7 @@
       <div class="side-l-inner-wrap">
         <div class="side-nav-content">
           <div class="side-nav-list">
-            <p class="side-nav-til fantasy">范特西</p>
+            <p class="side-nav-til fantasy">专题一</p>
             <ul>
               <li class="active">
                 <router-link to="/fantasy/castle">威廉古堡</router-link>
@@ -12,7 +12,7 @@
             </ul>
           </div>
           <div class="side-nav-list">
-            <p class="side-nav-til stride">跨时代</p>
+            <p class="side-nav-til stride">专题二</p>
             <ul>
               <li>
                 <router-link  to="/stride/fireworks">烟花易冷</router-link>
@@ -20,7 +20,7 @@
             </ul>
           </div>
           <div class="side-nav-list">
-            <p class="side-nav-til excleamation">惊叹号</p>
+            <p class="side-nav-til excleamation">专题三</p>
             <ul>
               <li>
                 <router-link to="/excleamation/sailor" replace>水手怕水</router-link>

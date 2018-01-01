@@ -8,6 +8,8 @@
 import * as topojson from 'topojson'
 import * as d3 from 'd3'
 import root from './chongqing.json'
+import config from '../tool/config'
+import { tooltip } from '../tool/utils'
 export default class Map {
   defaultSetting () {
     return {
@@ -20,7 +22,7 @@ export default class Map {
         right: 0
       },
       circleSty: {
-        'maxR': 8
+        'maxR': 20
       }
     }
   }
@@ -41,7 +43,6 @@ export default class Map {
     this.changeCor = ['城口县', '巫山县', '城口县', '云阳县', '梁平县', '石柱土家族自治县', '忠县', '黔江区', '秀山土家族苗族自治县', '垫江县', '长寿区', '涪陵区', '武隆区', '南川区', '綦江区', '永川区', '荣昌县', '铜梁区', '璧山区', '合川区', '潼南县']
   }
   drawCharts (data) {
-    console.log(data)
     const { circleSty: { maxR } } = this.config
     this.mapD = []
     this.xsData = []
@@ -77,18 +78,20 @@ export default class Map {
   }
   mapDraw () {
     const { width, height } = this.config
+    const {
+      pageWidth,
+      pageHeight
+    } = config
     const roots = topojson.feature(root, root.objects.chongqing)
     const rootData = roots.features
     // 控制地图缩放的大小
-    const scale = this.getZoomScale(rootData, width, height)
+    const scale = this.getZoomScale(rootData)
     const center = this.getCenters(rootData)
     const projection = d3.geoMercator()  // 球形墨卡托投影
-      .scale(scale * 48)
+      .scale(scale * 44)
       .center(center)
       .translate([width / 2, height / 2])
-    this.path = d3.geoPath()  // 创建一个地理路径生成器
-      .projection(projection)  // 取得或设置地理投影
-    console.log(this.path)
+    this.path = d3.geoPath(projection)  // 创建一个地理路径生成器
     // 路径组
     const updatePathG = this.mapSvg.selectAll('.mapPath')
       .data(rootData)
@@ -108,11 +111,54 @@ export default class Map {
         return '#84e75a'
       })
       .attr('d', this.path)
-      .attr('stroke', '#b8ff94')
-      .attr('stroke-width', 1)
+      .attr('stroke', '#1866cc')
+      .attr('stroke-width', 2)
+      .attr('fill', 'rgba(17, 27, 142, 0.9)')
       .attr('centre', d => {
         this.areaCentro.push(this.path.centroid(d))
         return this.path.centroid(d)
+      })
+      .on('mouseover', (d, i) => {
+        const tooltipName = d.properties.name
+        const selfId = d.properties.id
+        let tooltipXsValue
+        let tooltipXzValue
+        this.groupData[0].map((item, index) => {
+          if (item.id === selfId) {
+            tooltipXsValue = item.value
+          }
+        })
+        this.groupData[1].map((item, index) => {
+          if (item.id === selfId) {
+            tooltipXzValue = item.value
+          }
+        })
+        tooltipXsValue = tooltipXsValue || 0
+        tooltipXzValue = tooltipXzValue || 0
+        const top = d3.event.pageY / (window.innerHeight / pageHeight)
+        const left = d3.event.pageX / (window.innerWidth / pageWidth) + 20
+        const option = {
+          el: '.auto-tooltip',
+          location: {
+            x: left,
+            y: top
+          },
+          data: [{
+            name: '地区',
+            value: tooltipName
+          }, {
+            name: '刑事',
+            value: tooltipXsValue
+          }, {
+            name: '行政',
+            value: tooltipXzValue
+          }]
+        }
+        tooltip(option)
+        d3.select('.auto-tooltip').style('display', 'block')
+      })
+      .on('mouseout', function () {
+        d3.select('.auto-tooltip').style('display', 'none')
       })
     // 合并主城
     const chong = d3.set(['渝北区', '北碚区', '江北区', '沙坪坝区', '南岸区', '九龙坡区', '大渡口区', '巴南区', '渝中区'])
@@ -126,32 +172,35 @@ export default class Map {
     d3.selectAll('.mapSvg').append('path')
       .datum(hbc.path)
       .attr('d', this.path)
-      .attr('stroke', '#b8ff94')
-      .attr('fill', '#86e95b')
+      .attr('stroke', '#1866cc')
+      .attr('stroke-width', 2)
+      .attr('fill', 'rgba(17, 27, 142, 0.9)')
       .attr('centre', d => {
         this.areaCentro.push(this.path.centroid(d))
       })
+      .style('cursor', 'pointer')
     // 绘制圆圈组
     this.circleDraw()
   }
   circleDraw () {
     const { circleSty: { maxR } } = this.config
     // 绘制圆圈分组
+    console.log(this.groupData)
     const updateG = this.svg.selectAll('.circleG')
       .data(this.groupData)
     const enterG = updateG.enter()
     updateG.exit().remove()
     // update部分
     updateG.attr('class', (d, i) => {
-      return `circleG${this.nameDat[i]}`
+      return `circleG ${this.nameDat[i]}`
     })
     // enter部分
     enterG.append('g')
-      .attr('class', function (d, i) {
-        return `circleG${this.nameDat[i]}`
+      .attr('class', (d, i) => {
+        return `circleG ${this.nameDat[i]}`
       })
       .attr('transform', (d, i) => {
-        return 'translate(' + (i * 15) + ' ' + (i * 15 - 8) + ')'
+        return 'translate(' + (i * 15) + ' ' + (i * 15 - 40) + ')'
       })
     // 绘制圆组
     const updateCircleG = this.svg.selectAll('.circleG').selectAll('g')
@@ -255,14 +304,14 @@ export default class Map {
         }
       })
   }
-  getZoomScale (features, width, height) {
+  getZoomScale (features) {
+    const { width, height } = this.config
     let longitudeMin = 100000 // 最小经度
     let latitudeMin = 100000 // 最小维度
     let longitudeMax = 0 // 最大经度
     let latitudeMax = 0 // 最大纬度
-    console.log(this.path)
-    features.forEach((e) => {
-      let a = this.path.bounds(e) // [[最小经度，最小维度][最大经度，最大纬度]]
+    features.map((e) => {
+      let a = d3.geoPath().bounds(e) // [[最小经度，最小维度][最大经度，最大纬度]]
       if (a[0][0] < longitudeMin) {
         longitudeMin = a[0][0]
       }
@@ -286,7 +335,7 @@ export default class Map {
     let longitudeMax = 0
     let latitudeMax = 0
     features.forEach((e) => {
-      let a = this.path.bounds(e)
+      let a = d3.geoPath().bounds(e)
       if (a[0][0] < longitudeMin) {
         longitudeMin = a[0][0]
       }

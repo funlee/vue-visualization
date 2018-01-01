@@ -1,6 +1,7 @@
 <template>
   <div class="heat-map">
-    <div class="map-chart" id="mapChart"></div>
+    <div class="map-chart" id="mapChart">
+    </div>
   </div>
 </template>
 <script>
@@ -13,7 +14,6 @@
     name: 'heatMap',
     data () {
       return {
-
       }
     },
     mounted () {
@@ -47,6 +47,13 @@
 .map-chart{
   width:1800px;
   height:1400px;
+  margin: 0 auto;
+  transform: translateX(-100px);
+  overflow: hidden;
+}
+.map-chart svg{
+  display: block;
+  margin: 80px auto 0;
 }
 </style>
 
