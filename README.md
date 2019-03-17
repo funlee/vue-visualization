@@ -29,6 +29,8 @@ npm run dev
 ```
 然后在浏览器里输入：http:localhost:8080 即可访问
 
+在线访问：http://show.funlee.cn/vue-visualization
+
 心得
 -----
 D3.js 是基于数据来操作 DOM 的 JavaScript 库，而 Vue 允许开发者明确地向 DOM 呈现数据并抽象出复杂的逻辑；这两个都试图做类似的事情，但是如果组合在一起可能难以保持逻辑一致，因此在绘制图表的时候，要明确图表的 DOM 由谁来管理；我的心得就是，简单的（`平面直角坐标系图表`）图表由 Vue 来管理，复杂的图表（`SVG-PATH `居多的）由 D3.js 来管理
